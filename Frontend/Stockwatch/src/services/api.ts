@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8080';
+import { API_BASE_URL, AUTH_URL } from '../config/api';
 
 // Types
 export interface StockSearchResult {
@@ -56,7 +56,7 @@ export async function checkAuthStatus() {
 }
 
 export function getGoogleLoginUrl() {
-    return `${API_BASE_URL}/oauth2/authorization/google`;
+    return AUTH_URL;
 }
 
 export function getLogoutUrl() {
@@ -136,5 +136,3 @@ export async function removeFromWatchlist(symbol: string): Promise<void> {
         throw new Error('Failed to remove stock from watchlist');
     }
 }
-
-export { API_BASE_URL };

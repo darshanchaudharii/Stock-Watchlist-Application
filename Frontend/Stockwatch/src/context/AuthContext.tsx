@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { User, AuthContextType } from '../types';
 import { fetchCurrentUser } from '../services/api';
+import { API_BASE_URL } from '../config/api';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -37,7 +38,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     const logout = () => {
-        window.location.href = 'http://localhost:8080/api/auth/logout';
+        window.location.href = `${API_BASE_URL}/api/auth/logout`;
     };
 
     useEffect(() => {

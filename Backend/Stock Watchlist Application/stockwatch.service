@@ -1,0 +1,23 @@
+[Unit]
+Description=Stock Watchlist Application
+After=network.target
+
+[Service]
+Type=simple
+User=ec2-user
+WorkingDirectory=/home/ec2-user/app
+Environment="DB_URL=jdbc:postgresql://stockwatch-db.cj4a40s6uy0p.ap-south-1.rds.amazonaws.com:5432/stockwatch"
+Environment="DB_USERNAME=postgres"
+Environment="DB_PASSWORD=EqHiHvPDPbpyCOv7jNaI"
+Environment="GOOGLE_CLIENT_ID=57836893394-dt5fiuc2tgk8a26boms6g68mjugdatru.apps.googleusercontent.com"
+Environment="GOOGLE_CLIENT_SECRET=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"
+Environment="FRONTEND_URL=https://stock-watchlist-application.vercel.app"
+ExecStart=/usr/bin/java -jar /home/ec2-user/app/stockwatch.jar
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=stockwatch
+
+[Install]
+WantedBy=multi-user.target

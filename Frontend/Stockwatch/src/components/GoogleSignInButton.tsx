@@ -1,5 +1,3 @@
-import { AUTH_URL } from "../config/api";
-
 interface GoogleSignInButtonProps {
     onClick: () => void;
 }

@@ -1,0 +1,15 @@
+.git
+.gitignore
+.env
+.env.example
+*.md
+*.txt
+*.bat
+*.sh
+.mvn
+mvnw
+mvnw.cmd
+src
+pom.xml
+target/*
+!target/*.jar

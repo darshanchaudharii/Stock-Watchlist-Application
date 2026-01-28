@@ -18,53 +18,56 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final CustomOAuth2UserService customOAuth2UserService;
+        private final CustomOAuth2UserService customOAuth2UserService;
 
-    @Value("${app.frontend.url:http://localhost:5173}")
-    private String frontendUrl;
+        @Value("${app.frontend.url:http://localhost:5173}")
+        private String frontendUrl;
 
-    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService) {
-        this.customOAuth2UserService = customOAuth2UserService;
-    }
+        public SecurityConfig(CustomOAuth2UserService customOAuth2UserService) {
+                this.customOAuth2UserService = customOAuth2UserService;
+        }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/error", "/api/auth/status").permitAll()
-                        .requestMatchers("/api/stocks/search", "/api/stocks/quote/**", "/api/stocks/quotes").permitAll()
-                        .requestMatchers("/oauth2/**", "/login/**").permitAll()
-                        .anyRequest().authenticated())
-                .oauth2Login(oauth2 -> oauth2
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .oidcUserService(customOAuth2UserService))
-                        .defaultSuccessUrl(frontendUrl + "/dashboard", true)
-                        .failureUrl(frontendUrl + "?error=auth_failed"))
-                .logout(logout -> logout
-                        .logoutUrl("/api/auth/logout")
-                        .logoutSuccessUrl(frontendUrl)
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID"));
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http
+                                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                                .csrf(csrf -> csrf.disable())
+                                .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers("/", "/error", "/api/auth/status").permitAll()
+                                                .requestMatchers("/api/stocks/search", "/api/stocks/quote/**",
+                                                                "/api/stocks/quotes")
+                                                .permitAll()
+                                                .requestMatchers("/oauth2/**", "/login/**").permitAll()
+                                                .anyRequest().authenticated())
+                                .oauth2Login(oauth2 -> oauth2
+                                                .userInfoEndpoint(userInfo -> userInfo
+                                                                .oidcUserService(customOAuth2UserService))
+                                                .defaultSuccessUrl(frontendUrl + "/dashboard", true)
+                                                .failureUrl(frontendUrl + "?error=auth_failed"))
+                                .logout(logout -> logout
+                                                .logoutUrl("/api/auth/logout")
+                                                .logoutSuccessUrl(frontendUrl)
+                                                .invalidateHttpSession(true)
+                                                .deleteCookies("JSESSIONID"));
 
-        return http.build();
-    }
+                return http.build();
+        }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(
-                "https://stock-watchlist-application.vercel.app",
-                "http://stockwatch-backend.duckdns.org:8080"
-        ));
-        configuration.setAllowedMethods(List.of("*"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L);
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
+                CorsConfiguration configuration = new CorsConfiguration();
+                configuration.setAllowedOrigins(Arrays.asList(
+                                frontendUrl,
+                                "https://stock-watchlist-application.vercel.app",
+                                "http://localhost:5173",
+                                "http://localhost:3000"));
+                configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                configuration.setAllowedHeaders(List.of("*"));
+                configuration.setAllowCredentials(true);
+                configuration.setMaxAge(3600L);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", configuration);
+                return source;
+        }
 }

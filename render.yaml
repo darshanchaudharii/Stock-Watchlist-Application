@@ -1,6 +1,0 @@
-services:
-  - type: web
-    name: stock-watchlist-backend
-    env: docker
-    dockerfilePath: ./Backend/Stock Watchlist Application/Dockerfile
-    dockerContext: ./Backend/Stock Watchlist Application

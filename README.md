@@ -223,19 +223,40 @@ GRANT ALL PRIVILEGES ON DATABASE stockwatch TO stockwatch_user;
 
 ---
 
+## 🚀 Deployment
+
+The application is deployed securely using industry best practices.
+
+### Infrastructure
+- **Frontend**: Vercel (https://stock-watchlist-application.vercel.app)
+- **Backend**: AWS EC2 (t2.micro)
+- **Database**: AWS RDS (PostgreSQL 14)
+- **Domain**: DuckDNS (stockwatch-backend.duckdns.org)
+
+### Security Features
+- **HTTPS/SSL**: Full encryption via Let's Encrypt & Certbot
+- **Nginx Reverse Proxy**: Handles SSL termination and request forwarding
+- **Cross-Origin Auth**: Configured `SameSite=None; Secure` cookies for secure Vercel-EC2 communication
+- **Environment Isolation**: Production secrets managed via Environment Variables
+
+---
+
 ## 🎨 Screenshots
 
 ### Landing Page
 ![Landing Page](./screenshots/landing-page.png)
 
 ### Dashboard (Dark Mode)
-![Dashboard Dark](./screenshots/dashboard-dark.png)
+![Dashboard](./screenshots/dashboard-dark.png)
 
-### Dashboard (Light Mode)
-![Dashboard Light](./screenshots/dashboard-light.png)
+### Watchlist
+![Watchlist](./screenshots/watchlist.png)
 
-### Mobile View
-![Mobile View](./screenshots/mobile-view.png)
+### Stock Details (Search)
+![Stock Details](./screenshots/stock-details.png)
+
+### Login Modal
+![Login](./screenshots/login-modal.png)
 
 ---
 

@@ -1,10 +1,10 @@
 # Stock-Watchlist-Application
-=======
+
 # 📈 StockWatch - Real-Time Stock Watchlist Application
 
 A modern, full-stack stock watchlist application that allows users to track their favorite stocks in real-time. Built with React, Spring Boot, and PostgreSQL.
 
-![StockWatch Demo](./screenshots/dashboard-preview.png)
+![StockWatch Demo](./screenshots/watchlist.png)
 
 ## ✨ Features
 
